@@ -1,0 +1,4 @@
+repository "Cloud Repositories/HKU 3D Unity Template@9071375323424@cloud"
+  path "/"
+    br "/main"
+    co "/main"
