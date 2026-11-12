@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8751270989484840730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: ../../../../Desktop/FMODFiles/GameBalancingAudioFiles/FMODFiles/GameBalancingFMODStudioProject/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 639300926380869623
+  FileSizes:
+  - Name: Desktop
+    Value: 2092
+  Exists: 1
+--- !u!114 &-4271743359927402161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: ../../../../Desktop/FMODFiles/GameBalancingAudioFiles/FMODFiles/GameBalancingFMODStudioProject/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 639300926380900831
+  FileSizes:
+  - Name: Desktop
+    Value: 1162
+  Exists: 1
+--- !u!114 &-345283008888828121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/PlayerBank.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: ../../../../Desktop/FMODFiles/GameBalancingAudioFiles/FMODFiles/GameBalancingFMODStudioProject/Build/Desktop/PlayerBank.bank
+  Name: PlayerBank
+  StudioPath: bank:/PlayerBank
+  lastModified: 639300926159643466
+  FileSizes:
+  - Name: Desktop
+    Value: 506
+  Exists: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EventCache
+  EditorBanks:
+  - {fileID: -4271743359927402161}
+  - {fileID: -8751270989484840730}
+  - {fileID: -345283008888828121}
+  - {fileID: 3663937197430276509}
+  EditorEvents: []
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: -8751270989484840730}
+  StringsBanks:
+  - {fileID: -4271743359927402161}
+  cacheVersion: 131861
+  cacheTime: 639300926380900831
+  SerializableEventsDict: []
+--- !u!114 &3663937197430276509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/UIBank.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: ../../../../Desktop/FMODFiles/GameBalancingAudioFiles/FMODFiles/GameBalancingFMODStudioProject/Build/Desktop/UIBank.bank
+  Name: UIBank
+  StudioPath: bank:/UIBank
+  lastModified: 639300926159562634
+  FileSizes:
+  - Name: Desktop
+    Value: 506
+  Exists: 1
