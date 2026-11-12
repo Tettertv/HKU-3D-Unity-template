@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour
 {
     public static InputManager Instance { get; private set; }
 
-    private Player playerInput;
+    //private Player playerInput;
 
     private bool wasTalking = false;
 
@@ -29,12 +29,12 @@ public class InputManager : MonoBehaviour
             Instance = this;
         }
 
-        playerInput = new Player();
+        //playerInput = new Player();
 
         SubscribeInputs();
 
-        playerInput.DefaultMovement.Enable();
-        playerInput.System.Enable();
+        //playerInput.DefaultMovement.Enable();
+        //playerInput.System.Enable();
     }
 
     private void SubscribeInputs()
@@ -63,23 +63,23 @@ public class InputManager : MonoBehaviour
 
     private void EnableGameplay()
     {
-        playerInput.DefaultMovement.Enable();
+        //playerInput.DefaultMovement.Enable();
     }
 
     private void DisableGameplay()
     {
-        playerInput.DefaultMovement.Disable();
+        //playerInput.DefaultMovement.Disable();
     }
 
     public void PauseGame()
     {
         BlockGameplay();
 
-        if (playerInput.Dialogue.enabled)
+        /*if (playerInput.Dialogue.enabled)
         {
-            playerInput.Dialogue.Disable();
+            //playerInput.Dialogue.Disable();
             wasTalking = true;
-        }
+        }*/
         Time.timeScale = 0f;
     }
 
@@ -88,7 +88,7 @@ public class InputManager : MonoBehaviour
         if (wasTalking)
         {
             wasTalking = false;
-            playerInput.Dialogue.Enable();
+            //playerInput.Dialogue.Enable();
         }
 
         Time.timeScale = 1f;
