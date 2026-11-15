@@ -36,21 +36,23 @@ public class LightManager : MonoBehaviour
 
     public void SetProfile(LightingProfile profile)
     {
-        if (profile == null)
-            return;
+        if (profile == null) return;
 
         if (transitionRoutine != null)
+        {
             StopCoroutine(transitionRoutine);
+        }
 
-        transitionRoutine = StartCoroutine(
-            BlendToProfile(profile, profile.transitionDuration)
-        );
+
+        transitionRoutine = StartCoroutine(BlendToProfile(profile, profile.transitionDuration));
     }
 
     public void SetProfileImmediate(LightingProfile profile)
     {
         if (transitionRoutine != null)
+        {
             StopCoroutine(transitionRoutine);
+        }
 
         ApplyProfileImmediate(profile);
     }
@@ -59,20 +61,24 @@ public class LightManager : MonoBehaviour
     {
         currentProfile = profile;
 
-        globalLight.color = profile.globalLightColor;
-        globalLight.intensity = profile.globalLightIntensity;
+        if (globalLight != null)
+        {
+            globalLight.color = profile.globalLightColor;
+            globalLight.intensity = profile.globalLightIntensity;
+        }
 
         if (playerAccentLight != null)
+        {
             playerAccentLight.intensity = profile.accentLightIntensityMultiplier;
+        }
 
         if (profile.volumeProfile != null)
+        {
             globalVolume.profile = profile.volumeProfile;
+        }
     }
 
-    private System.Collections.IEnumerator BlendToProfile(
-        LightingProfile target,
-        float duration
-    )
+    private System.Collections.IEnumerator BlendToProfile(LightingProfile target, float duration)
     {
         currentProfile = target;
 
@@ -90,17 +96,9 @@ public class LightManager : MonoBehaviour
         {
             float t = time / duration;
 
-            globalLight.color = Color.Lerp(
-                startColor,
-                target.globalLightColor,
-                t
-            );
+            globalLight.color = Color.Lerp(startColor,target.globalLightColor,t);
 
-            globalLight.intensity = Mathf.Lerp(
-                startIntensity,
-                target.globalLightIntensity,
-                t
-            );
+            globalLight.intensity = Mathf.Lerp(startIntensity,target.globalLightIntensity,t);
 
             if (playerAccentLight != null)
             {

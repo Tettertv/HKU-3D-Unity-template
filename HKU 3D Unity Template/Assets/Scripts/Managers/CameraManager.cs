@@ -1,7 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+using Unity.Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
@@ -22,7 +21,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private float defaultShakeDuration = 0.12f;
 
     [Header("References")]
-    [SerializeField] private Transform cameraShakeRoot;
+    [SerializeField] private CinemachineImpulseSource impulseSource; //Probs wanna keep it like this directly as i might have to grab the same sort of component if i want different sources.
 
     private Coroutine impactRoutine;
 
@@ -38,29 +37,17 @@ public class CameraManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void PlayImpact(
-        float? timeScale = null,
-        float? duration = null,
-        float? shakeStrength = null,
-        float? shakeDuration = null,
-        GameObject overrideVFX = null)
+    public void PlayImpact(float? timeScale = null, float? duration = null,float? shakeStrength = null,float? shakeDuration = null,GameObject overrideVFX = null)
     {
         if (impactRoutine != null)
+        {
             StopCoroutine(impactRoutine);
+        }
 
-        impactRoutine = StartCoroutine(ImpactRoutine(
-            timeScale ?? defaultTimeScale,
-            duration ?? defaultDuration,
-            shakeStrength ?? defaultShakeStrength,
-            shakeDuration ?? defaultShakeDuration
-        ));
+        impactRoutine = StartCoroutine(ImpactRoutine(timeScale ?? defaultTimeScale,duration ?? defaultDuration,shakeStrength ?? defaultShakeStrength,shakeDuration ?? defaultShakeDuration));
     }
 
-    private IEnumerator ImpactRoutine(
-        float timeScale,
-        float duration,
-        float shakeStrength,
-        float shakeDuration)
+    private IEnumerator ImpactRoutine(float timeScale,float duration,float shakeStrength,float shakeDuration) //Might want to add a different parameter here for impulse shapes
     {
         Time.timeScale = timeScale;
 
@@ -68,8 +55,14 @@ public class CameraManager : MonoBehaviour
 
         Time.timeScale = 1f;
 
-        cameraShakeRoot.DOKill();
-        cameraShakeRoot.DOShakePosition(shakeDuration, shakeStrength).SetUpdate(true); //Shake em cam :)
+        //I would select the chosen impulse here, maybe have a "currentImpulseSource" get assigned the correct one in a switch case. Could use ints or floats (more readable) for that in the SO
+
+        if (impulseSource != null)
+        {
+            impulseSource.ImpulseDefinition.ImpulseDuration = shakeDuration;
+            
+            impulseSource.GenerateImpulseWithForce(shakeStrength);
+        }
 
         impactRoutine = null;
     }

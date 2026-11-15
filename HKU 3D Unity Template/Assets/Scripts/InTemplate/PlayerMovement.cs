@@ -6,11 +6,7 @@ public class PlayerMovement : MonoBehaviour
     //This script was made using this tutorial:
     //https://www.youtube.com/watch?v=2jqNoWmdKJ8
 
-    public InputActionAsset InputActions;
     public CharacterController playerCharacterController;
-
-    private InputAction playerMoveAction;
-    private InputAction playerJumpAction;
 
     private Vector2 playerMoveAmount;
 
@@ -21,36 +17,126 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float turnSmoothingVelocity;
 
-    [SerializeField]
-    private float jumpHeight = 5.0f;
-    private float verticalVelocity = 0.0f;
-    private float gravity = -9.81f;
+    [SerializeField] private PlayerMovementStats stats;
+
+    private float verticalVelocity;
+    private bool wasGrounded;
+
+    private bool jumpToConsume;
+    private float timeJumpWasPressed;
+    private float frameLeftGrounded = float.MinValue;
+    private float time;
+
+    private bool coyoteUsable;
 
     [SerializeField]
     private Transform playerCamera;
 
     private void OnEnable()
     {
-        InputActions.FindActionMap("Player").Enable();
-
+        if (InputManager.Instance == null)
+        {
+            Debug.Log("No Input manager found :(");
+            return;
+        }
+        InputManager.Instance.OnMove += MoveInput;
+        InputManager.Instance.OnJump += JumpInput;
     }
 
     private void OnDisable()
     {
-        InputActions.FindActionMap("Player").Disable();
+        if (InputManager.Instance == null)
+        {
+            return;
+        }
+
+        InputManager.Instance.OnMove -= MoveInput;
+        InputManager.Instance.OnJump -= JumpInput;
     }
 
-    private void Awake()
+    private void MoveInput(Vector2 movement)
     {
-        playerMoveAction = InputSystem.actions.FindAction("Move");
-        playerJumpAction = InputSystem.actions.FindAction("Jump");
+        playerMoveAmount = movement;
     }
 
-    public void Update()
+    private void JumpInput()
     {
-        playerMoveAmount = playerMoveAction.ReadValue<Vector2>();
-        Jump();
+        jumpToConsume = true;
+        timeJumpWasPressed = time;
+    }
+
+    private void Update()
+    {
+        time += Time.deltaTime;
+
+        CheckGrounded();
+        HandleJump();
+        HandleGravity();
+
         PlayerMoveAndRotate();
+    }
+
+    private bool CanUseCoyote()
+    {
+        if (!coyoteUsable || playerCharacterController.isGrounded || time >= frameLeftGrounded + stats.CoyoteTime)
+        {
+            return false;
+        }
+
+        return true;
+    }
+    private void CheckGrounded()
+    {
+        bool grounded = playerCharacterController.isGrounded;
+
+        if (wasGrounded && !grounded)
+        {
+            frameLeftGrounded = time;
+        }
+
+        wasGrounded = grounded;
+    }
+
+    private void HandleJump()
+    {
+        bool grounded = playerCharacterController.isGrounded;
+
+        if (grounded)
+        {
+            coyoteUsable = true;
+        }
+
+        if (jumpToConsume && (grounded || CanUseCoyote()))
+        {
+            ExecuteJump();
+        }
+
+        if (jumpToConsume && time > timeJumpWasPressed + stats.JumpBuffer)
+        {
+            jumpToConsume = false;
+        }
+    }
+
+    private void ExecuteJump()
+    {
+        jumpToConsume = false;
+        coyoteUsable = false;
+
+        verticalVelocity = Mathf.Sqrt(2f * Mathf.Abs(stats.Gravity) * stats.JumpHeight);
+    }
+
+    private void HandleGravity()
+    {
+        if (playerCharacterController.isGrounded && verticalVelocity < 0f)
+        {
+            verticalVelocity = -1f;
+        }
+        else
+        {
+            verticalVelocity += stats.Gravity * Time.deltaTime;
+
+            verticalVelocity = Mathf.Max(verticalVelocity,-stats.MaxFallSpeed);
+        }
     }
 
     private void PlayerMoveAndRotate()
@@ -70,22 +156,6 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             playerCharacterController.Move(verticalMove);
-        }
-    }
-
-    private void Jump()
-    {
-        if (playerCharacterController.isGrounded)
-        {
-            verticalVelocity = -1f;
-            if (playerJumpAction.WasPressedThisFrame())
-            {
-                verticalVelocity = jumpHeight;
-            }
-        }
-        else
-        {
-            verticalVelocity += gravity * Time.deltaTime;
         }
     }
 }

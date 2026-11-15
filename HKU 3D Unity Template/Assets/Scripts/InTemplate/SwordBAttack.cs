@@ -9,9 +9,6 @@ public class Sword_attack : MonoBehaviour
     public float CircleRadius = 1.0f;
     public float ElevationOffset = 0.0f;
 
-    public InputActionAsset InputActions;
-    private InputAction playerAttackAction;
-
     private Vector3 positionOffset;
     private float angle;
 
@@ -23,35 +20,44 @@ public class Sword_attack : MonoBehaviour
 
     private bool attacking = false;
 
+    private void Awake()
+    {
+        swordMesh.enabled = false;
+    }
     private void OnEnable()
     {
-        InputActions.FindActionMap("Player").Enable();
+        if (InputManager.Instance == null)
+        {
+            Debug.Log("No Input manager found :(");
+            return;
+        }
+        InputManager.Instance.OnAttack += AttackSwordBeta;
     }
 
     private void OnDisable()
     {
-        InputActions.FindActionMap("Player").Disable();
+        if (InputManager.Instance == null)
+        {
+            return;
+
+        }
+
+        InputManager.Instance.OnAttack -= AttackSwordBeta;
     }
 
-    private void Awake()
+    private void AttackSwordBeta()
     {
-        playerAttackAction = InputSystem.actions.FindAction("Attack");
-        swordMesh.enabled = false;
+        //Calculate which angle the sword swing should start at and enable the attack
+        attacking = true;
+        swordMesh.enabled = true;
+        distanceSwung = 0.0f;
+        startAngle = (90f - Target.eulerAngles.y) * Mathf.Deg2Rad;
+        Debug.Log("I can swing my sword sword");
     }
 
     void LateUpdate()
     {
-        if (playerAttackAction.WasPressedThisFrame() && attacking == false)
-        {
-            //Calculate which angle the sword swing should start at and enable the attack
-            attacking = true;
-            swordMesh.enabled = true;
-            distanceSwung = 0.0f;
-            startAngle = (90f - Target.eulerAngles.y) * Mathf.Deg2Rad;
-            Debug.Log("I can swing my sword sword");
-        }
-
-        if (attacking == true && distanceSwung < swingLength)
+        if (attacking == true && distanceSwung < swingLength) //Rather just use the animator for this but all this is gonna go poof gone anyways
         {
             
             angle = startAngle + distanceSwung;
@@ -74,8 +80,5 @@ public class Sword_attack : MonoBehaviour
             attacking = false;
             swordMesh.enabled = false;
         }
-
     }
-
-    
 }

@@ -1,17 +1,23 @@
-using DG.Tweening.Core.Easing;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
+using System;
 
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance { get; private set; }
 
-    //private Player playerInput;
+    [SerializeField] private InputActionAsset inputActions;
 
-    private bool wasTalking = false;
+    private InputActionMap defaultActionMap;
+
+    private InputAction moveAction;
+    private InputAction jumpAction;
+    private InputAction attackAction;
+
+    public event Action<Vector2> OnMove;
+    public event Action OnJump;
+    public event Action OnJumpReleased;
+    public event Action OnAttack;
 
     private int gameplayBlockers = 0;
 
@@ -24,74 +30,77 @@ public class InputManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        else
-        {
-            Instance = this;
-        }
 
-        //playerInput = new Player();
+        Instance = this;
+
+        defaultActionMap = inputActions.FindActionMap("DefaultMovement");
+
+        moveAction = defaultActionMap.FindAction("Move");
+        jumpAction = defaultActionMap.FindAction("Jump");
+        attackAction = defaultActionMap.FindAction("Attack");
 
         SubscribeInputs();
-
-        //playerInput.DefaultMovement.Enable();
-        //playerInput.System.Enable();
     }
 
     private void SubscribeInputs()
     {
-        //Subribe to sum shit here okey?
+        moveAction.performed += ctx => OnMove?.Invoke(ctx.ReadValue<Vector2>());
+        moveAction.canceled += ctx => OnMove?.Invoke(Vector2.zero);
+
+        jumpAction.performed += ctx => OnJump?.Invoke();
+        jumpAction.canceled += ctx => OnJumpReleased?.Invoke();
+
+        attackAction.performed += ctx => OnAttack?.Invoke();
     }
+
+    private void OnEnable()
+    {
+        if (defaultActionMap != null && !GameplayBlocked)
+            defaultActionMap.Enable();
+    }
+
+    private void OnDisable()
+    {
+        if (defaultActionMap != null)
+            defaultActionMap.Disable();
+    }
+
     public void BlockGameplay()
     {
         gameplayBlockers++;
 
         if (gameplayBlockers == 1)
         {
-            DisableGameplay();
+
         }
+            defaultActionMap.Disable();
     }
 
     public void UnblockGameplay()
     {
         gameplayBlockers = Mathf.Max(0, gameplayBlockers - 1);
 
-        if (gameplayBlockers == 0)
+        if (gameplayBlockers == 0 && isActiveAndEnabled)
         {
-            EnableGameplay();
+            defaultActionMap.Enable();
         }
-    }
-
-    private void EnableGameplay()
-    {
-        //playerInput.DefaultMovement.Enable();
-    }
-
-    private void DisableGameplay()
-    {
-        //playerInput.DefaultMovement.Disable();
     }
 
     public void PauseGame()
     {
         BlockGameplay();
-
-        /*if (playerInput.Dialogue.enabled)
-        {
-            //playerInput.Dialogue.Disable();
-            wasTalking = true;
-        }*/
         Time.timeScale = 0f;
     }
 
     public void ResumeGame()
     {
-        if (wasTalking)
-        {
-            wasTalking = false;
-            //playerInput.Dialogue.Enable();
-        }
-
         Time.timeScale = 1f;
         UnblockGameplay();
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
     }
 }
