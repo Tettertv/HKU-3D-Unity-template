@@ -31,6 +31,7 @@ public class FMODBankManager : MonoBehaviour
     private void InitFMOD()
     {
         EnsureBankLoaded("UIBank");
+        EnsureBankLoaded("PlayerBank");
         EnsureBankLoaded("Master");
         EnsureBankLoaded("Master.strings");
 

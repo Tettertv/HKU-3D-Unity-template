@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{6f4d8e63-9f0a-47be-ad4b-4c0fa83b1642}">
+		<property name="assetPath">
+			<value>735907__erikcruzdev__whip-woosh.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.54</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2eaea6d2-b72b-4c1d-9613-f3a857e8588c}</destination>
+		</relationship>
+	</object>
+</objects>

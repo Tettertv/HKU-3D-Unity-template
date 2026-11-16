@@ -212,6 +212,10 @@ public class PlayerMovement : MonoBehaviour
     {
         movementState = state;
     }
+    public void ApplyExternalMovement(Vector3 movement) //Other scripts (Mainly the attack scripts) use this to push the player.
+    {
+        playerCharacterController.Move(movement);
+    }
 
     public void SetMovementLocked(bool locked) //Shi i dont think i like having this restriction here but it works.
     {
