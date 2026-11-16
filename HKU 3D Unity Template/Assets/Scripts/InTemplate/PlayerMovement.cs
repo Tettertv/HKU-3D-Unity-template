@@ -3,34 +3,41 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //This script was made using this tutorial:
+    //part of this script was made using this tutorial: (PlayerMoveAndRotate())
     //https://www.youtube.com/watch?v=2jqNoWmdKJ8
 
-    public CharacterController playerCharacterController;
+    //Part of this script was also made with Tarodev's 2d character controller (the jump and gravity)
+
+    [Header("References")]
+    [SerializeField] private PlayerMovementStats stats;
+    [SerializeField] private CharacterController playerCharacterController;
+    [SerializeField] private Transform playerCamera;
+
+    [SerializeField] private float playerWalkSpeed = 5.0f; //These stats and more when the scripts gets bigger gotta be replaced by a data class holding it
+    [SerializeField] private float playerRotateDampening = 0.1f;
+    [SerializeField] private float turnSmoothingVelocity;
 
     private Vector2 playerMoveAmount;
-
-    [SerializeField]
-    private float playerWalkSpeed = 5.0f;
-    [SerializeField]
-    private float playerRotateDampening = 0.1f;
-    [SerializeField]
-    private float turnSmoothingVelocity;
-
-    [SerializeField] private PlayerMovementStats stats;
-
-    private float verticalVelocity;
-    private bool wasGrounded;
-
-    private bool jumpToConsume;
-    private float timeJumpWasPressed;
-    private float frameLeftGrounded = float.MinValue;
     private float time;
 
+    //JumpingVariables
+    private float verticalVelocity;
+    private bool wasGrounded;
+    private bool canCoyote;
+    private float timeJumpWasPressed;
+    private float frameLeftGrounded = float.MinValue;
     private bool coyoteUsable;
 
-    [SerializeField]
-    private Transform playerCamera;
+    //StateVariables... STATE? this? State? hit the rooooad dude, This is priiiivate variables
+    private bool movementLocked; //Hmmmmm
+
+    private MovementState movementState = MovementState.Grounded;
+    public enum MovementState
+    {
+        Grounded,
+        InAir,
+        NoInput
+    }
 
     private void OnEnable()
     {
@@ -61,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void JumpInput()
     {
-        jumpToConsume = true;
+        canCoyote = true;
         timeJumpWasPressed = time;
     }
 
@@ -70,21 +77,27 @@ public class PlayerMovement : MonoBehaviour
         time += Time.deltaTime;
 
         CheckGrounded();
+
         HandleJump();
         HandleGravity();
 
-        PlayerMoveAndRotate();
-    }
-
-    private bool CanUseCoyote()
-    {
-        if (!coyoteUsable || playerCharacterController.isGrounded || time >= frameLeftGrounded + stats.CoyoteTime)
+        switch (movementState)
         {
-            return false;
+            case MovementState.Grounded:
+                PlayerMoveAndRotate();
+                break;
+
+            case MovementState.InAir:
+                PlayerMoveAndRotate();
+                break;
+
+            case MovementState.NoInput:
+                break;
         }
 
-        return true;
+        HandleGravity();
     }
+
     private void CheckGrounded()
     {
         bool grounded = playerCharacterController.isGrounded;
@@ -106,20 +119,29 @@ public class PlayerMovement : MonoBehaviour
             coyoteUsable = true;
         }
 
-        if (jumpToConsume && (grounded || CanUseCoyote()))
+        if (canCoyote && (grounded || CanUseCoyote()) && !movementLocked)
         {
             ExecuteJump();
         }
 
-        if (jumpToConsume && time > timeJumpWasPressed + stats.JumpBuffer)
+        if (canCoyote && time > timeJumpWasPressed + stats.JumpBuffer)
         {
-            jumpToConsume = false;
+            canCoyote = false;
         }
+    }
+    private bool CanUseCoyote()
+    {
+        if (!coyoteUsable || playerCharacterController.isGrounded || time >= frameLeftGrounded + stats.CoyoteTime)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private void ExecuteJump()
     {
-        jumpToConsume = false;
+        canCoyote = false;
         coyoteUsable = false;
 
         verticalVelocity = Mathf.Sqrt(2f * Mathf.Abs(stats.Gravity) * stats.JumpHeight);
@@ -140,7 +162,15 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void PlayerMoveAndRotate()
-    { 
+    {
+        if (movementLocked) //Only fall when movement is locked, mainly during combat animations
+        {
+            Vector3 onlyUseGravity = new Vector3(0f, verticalVelocity, 0f) * Time.deltaTime;
+
+            playerCharacterController.Move(onlyUseGravity);
+            return;
+        }
+
         Vector3 playerDirection = new Vector3(playerMoveAmount.x,0f, playerMoveAmount.y).normalized;
         Vector3 verticalMove = new Vector3(0f, verticalVelocity, 0f) * Time.deltaTime;
 
@@ -157,5 +187,34 @@ public class PlayerMovement : MonoBehaviour
         {
             playerCharacterController.Move(verticalMove);
         }
+    }
+
+    public void ChangeMovementState(MovementState newState) //Not sure if i'd want this public, makes sense that the playermanager could acces it but dont want state to just be toyed with by other scripts i think
+    {
+        if (movementState == newState)
+        {
+            Debug.Log("Tried to transition into state but was already in there" + newState.ToString());
+            return;
+        }
+
+
+        ExitState(movementState); // Might want a switch case in for if different exits require different things, or just a single if to check if its the exeptional one
+
+        EnterState(newState);
+    }
+
+    private void ExitState(MovementState state)//Things like cleanup of random shi or whatever
+    {
+        
+    }
+
+    private void EnterState(MovementState state)
+    {
+        movementState = state;
+    }
+
+    public void SetMovementLocked(bool locked) //Shi i dont think i like having this restriction here but it works.
+    {
+        movementLocked = locked;
     }
 }

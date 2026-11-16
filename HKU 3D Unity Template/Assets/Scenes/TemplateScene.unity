@@ -131,6 +131,8 @@ GameObject:
   - component: {fileID: 57344772}
   - component: {fileID: 57344771}
   - component: {fileID: 57344773}
+  - component: {fileID: 57344774}
+  - component: {fileID: 57344775}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -168,12 +170,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14625d2bb3c948947bc8dbcbd351a556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  stats: {fileID: 11400000, guid: 578608d11b76ff44f89ef5e2a0d1eef9, type: 2}
   playerCharacterController: {fileID: 57344772}
+  playerCamera: {fileID: 330585546}
   playerWalkSpeed: 5
   playerRotateDampening: 0.1
   turnSmoothingVelocity: 0
-  stats: {fileID: 11400000, guid: 578608d11b76ff44f89ef5e2a0d1eef9, type: 2}
-  playerCamera: {fileID: 330585546}
 --- !u!143 &57344772
 CharacterController:
   m_ObjectHideFlags: 0
@@ -211,6 +213,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7255dcfe66c785a44a7f0dfcbb7df0ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  animator: {fileID: 57344775}
+  playerCamera: {fileID: 330585546}
+  playerMovement: {fileID: 57344771}
+--- !u!114 &57344774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57344769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea9c178c014b6da4291be292bd1d3993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!95 &57344775
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57344769}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &71910524
 GameObject:
   m_ObjectHideFlags: 0
@@ -762,7 +801,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10269751, y: -0.000000020652754, z: 0.00000000213226, w: 0.99471265}
+  m_LocalRotation: {x: 0.10269751, y: 0.0000000030698144, z: -3.16938e-10, w: 0.99471265}
   m_LocalPosition: {x: 0, y: 6.44, z: -5.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1809,7 +1848,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857044062}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10269749, y: -0.00000002065275, z: 0.0000000021322597, w: 0.99471265}
+  m_LocalRotation: {x: 0.10269749, y: 0.0000000030698137, z: -3.1693798e-10, w: 0.99471265}
   m_LocalPosition: {x: 0, y: 6.44, z: -5.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1929,7 +1968,7 @@ MonoBehaviour:
   TargetOffset: {x: 0, y: -1, z: 0}
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 1, y: 1, z: 1}
+    PositionDamping: {x: 1, y: 1, z: 2.4}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
