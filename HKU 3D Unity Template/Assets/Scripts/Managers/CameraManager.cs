@@ -8,7 +8,6 @@ public class CameraManager : MonoBehaviour
     {
         Rotational,
         Focus,
-        State3
     }
     public static CameraManager Instance { get; private set; }
 
@@ -54,6 +53,9 @@ public class CameraManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(duration);
 
         Time.timeScale = 1f;
+
+        //Also this method only allows for screenshake AFTER the hitstun, might want a function to do the shake beforehand so that it's
+        //possible to have the screen shake already while the game is slowed down
 
         //I would select the chosen impulse here, maybe have a "currentImpulseSource" get assigned the correct one in a switch case. Could use ints or floats (more readable) for that in the SO
 
