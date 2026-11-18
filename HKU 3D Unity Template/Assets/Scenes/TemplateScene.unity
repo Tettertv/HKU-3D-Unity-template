@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 46045552}
   - component: {fileID: 46045551}
   - component: {fileID: 46045550}
+  - component: {fileID: 46045557}
   m_Layer: 0
   m_Name: Enemy (2)
   m_TagString: Enemy
@@ -441,6 +442,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46045548}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &46045557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46045548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cea6e0046af13fb4484dec4aaa4c369a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombatTarget
 --- !u!1 &57344769
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,6 +468,7 @@ GameObject:
   - component: {fileID: 57344773}
   - component: {fileID: 57344774}
   - component: {fileID: 57344775}
+  - component: {fileID: 57344776}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -576,6 +590,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &57344776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57344769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bc345af78074bc47afd3c1b52d2dd8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  rotationalCamera: {fileID: 857044068}
+  focusCamera: {fileID: 1622694939}
+  inspectorPool: []
 --- !u!1 &129143195
 GameObject:
   m_ObjectHideFlags: 0
@@ -2231,6 +2260,8 @@ GameObject:
   - component: {fileID: 1562491365}
   - component: {fileID: 1562491364}
   - component: {fileID: 1562491366}
+  - component: {fileID: 1562491367}
+  - component: {fileID: 1562491368}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -2407,6 +2438,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5bcdfb5868b173a41a007e7cac8cf98c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!114 &1562491367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562491357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cea6e0046af13fb4484dec4aaa4c369a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!114 &1562491368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562491357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b2926463c1a4244a8f350e0032b152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
 --- !u!1 &1622694933
@@ -2933,6 +2988,7 @@ GameObject:
   - component: {fileID: 2029540452}
   - component: {fileID: 2029540451}
   - component: {fileID: 2029540450}
+  - component: {fileID: 2029540457}
   m_Layer: 0
   m_Name: Enemy (1)
   m_TagString: Enemy
@@ -3111,6 +3167,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2029540448}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2029540457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2029540448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cea6e0046af13fb4484dec4aaa4c369a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombatTarget
 --- !u!1 &2061635909
 GameObject:
   m_ObjectHideFlags: 0

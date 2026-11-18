@@ -13,11 +13,13 @@ public class InputManager : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction attackAction;
+    private InputAction combatLockAction;
 
     public event Action<Vector2> OnMove;
     public event Action OnJump;
     public event Action OnJumpReleased;
     public event Action OnAttack;
+    public event Action OnCombatLock;
 
     private int gameplayBlockers = 0;
 
@@ -38,6 +40,7 @@ public class InputManager : MonoBehaviour
         moveAction = defaultActionMap.FindAction("Move");
         jumpAction = defaultActionMap.FindAction("Jump");
         attackAction = defaultActionMap.FindAction("Attack");
+        combatLockAction = defaultActionMap.FindAction("CombatLock");
 
         SubscribeInputs();
     }
@@ -51,6 +54,8 @@ public class InputManager : MonoBehaviour
         jumpAction.canceled += ctx => OnJumpReleased?.Invoke();
 
         attackAction.performed += ctx => OnAttack?.Invoke();
+
+        combatLockAction.performed += ctx => OnCombatLock?.Invoke();
     }
 
     private void OnEnable()
