@@ -6,6 +6,7 @@ public class CombatTargetFinder : MonoBehaviour
 {
     public static List<Transform> enemyTargetPool;
 
+    private bool lockedOn;
     private Transform currentTarget;
     [SerializeField] private CinemachineCamera rotationalCamera;
     [SerializeField] private CinemachineCamera focusCamera;
@@ -27,7 +28,7 @@ public class CombatTargetFinder : MonoBehaviour
             return;
         }
         InputManager.Instance.OnCombatLock += TryCombatLock;
-
+        InputManager.Instance.OnCombatLockOff += LockOff;
     }
 
     private void OnDisable()
@@ -37,6 +38,7 @@ public class CombatTargetFinder : MonoBehaviour
             return;
         }
         InputManager.Instance.OnCombatLock -= TryCombatLock;
+        InputManager.Instance.OnCombatLockOff -= LockOff;
     }
 
     private void Update()
@@ -49,6 +51,20 @@ public class CombatTargetFinder : MonoBehaviour
         Debug.Log("I am trying to lock the camera");
 
         currentTarget = GetCenterTarget();
+
+        if (currentTarget != null)
+        {
+            LockOn();
+        }
+        else
+        {
+            if (!lockedOn)
+            {
+                Debug.Log("Im already locked off");
+                return;
+            }
+            LockOff();
+        }
     }
 
     public static void AddToTargetPool(Transform target)
@@ -67,6 +83,32 @@ public class CombatTargetFinder : MonoBehaviour
         }
     }
 
+    public void RetryCombatLock()
+    {
+
+    }
+
+    private void LockOn()
+    {
+        if (currentTarget)
+        {
+            focusCamera.LookAt = currentTarget;
+            focusCamera.gameObject.SetActive(true);
+
+            rotationalCamera.gameObject.SetActive(false);
+            lockedOn = true;
+        }
+    }
+
+    private void LockOff()
+    {
+        focusCamera.LookAt = null;
+        focusCamera.gameObject.SetActive(false);
+
+        rotationalCamera.gameObject.SetActive(true);
+        lockedOn = false;
+    }
+
     private Transform GetCenterTarget() //gets the target closest to the center of the screen
     {
         if (enemyTargetPool == null ||  enemyTargetPool.Count == 0)
@@ -83,15 +125,18 @@ public class CombatTargetFinder : MonoBehaviour
 
         for(int i = 0; i < enemyTargetPool.Count; i++)
         {
-            Vector3 targetViewport = cam.WorldToViewportPoint(enemyTargetPool[i].position);
-            targetViewport -= Vector3.forward * targetViewport.z; //Removes the Depth part of it for now?
-
-            float targetDistanceFromCenter = Vector3.Distance(targetViewport,center);
-
-            if(targetDistanceFromCenter < shortestDistance)
+            if(enemyTargetPool[i] != currentTarget)
             {
-                shortestDistance = targetDistanceFromCenter;
-                minIndex = i;
+                Vector3 targetViewport = cam.WorldToViewportPoint(enemyTargetPool[i].position);
+                targetViewport -= Vector3.forward * targetViewport.z; //Removes the Depth part of it for now?
+
+                float targetDistanceFromCenter = Vector3.Distance(targetViewport, center);
+
+                if (targetDistanceFromCenter < shortestDistance)
+                {
+                    shortestDistance = targetDistanceFromCenter;
+                    minIndex = i;
+                }
             }
         }
 

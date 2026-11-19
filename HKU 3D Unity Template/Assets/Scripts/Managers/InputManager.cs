@@ -20,6 +20,9 @@ public class InputManager : MonoBehaviour
     public event Action OnJumpReleased;
     public event Action OnAttack;
     public event Action OnCombatLock;
+    public event Action OnCombatLockOff;
+
+    private bool holdTriggered;
 
     private int gameplayBlockers = 0;
 
@@ -55,7 +58,9 @@ public class InputManager : MonoBehaviour
 
         attackAction.performed += ctx => OnAttack?.Invoke();
 
-        combatLockAction.performed += ctx => OnCombatLock?.Invoke();
+        combatLockAction.started += OnCombatLockStarted;
+        combatLockAction.performed += OnCombatLockPerformed;
+        combatLockAction.canceled += OnCombatLockCanceled;
     }
 
     private void OnEnable()
@@ -68,6 +73,25 @@ public class InputManager : MonoBehaviour
     {
         if (defaultActionMap != null)
             defaultActionMap.Disable();
+    }
+
+    private void OnCombatLockStarted(InputAction.CallbackContext ctx)
+    {
+        holdTriggered = false;
+    }
+
+    private void OnCombatLockPerformed(InputAction.CallbackContext ctx)
+    {
+        holdTriggered = true;
+        OnCombatLockOff?.Invoke();
+    }
+
+    private void OnCombatLockCanceled(InputAction.CallbackContext ctx)
+    {
+        if (!holdTriggered)
+        {
+            OnCombatLock?.Invoke();
+        }
     }
 
     public void BlockGameplay()

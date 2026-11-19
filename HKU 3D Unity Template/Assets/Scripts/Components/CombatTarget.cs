@@ -41,4 +41,9 @@ public class CombatTarget : MonoBehaviour
             }
         }
     }
+
+    private void OnDestroy()
+    {
+        CombatTargetFinder.RemoveFromTargetPool(this.transform);
+    }
 }
