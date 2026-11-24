@@ -12,8 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35be5f3fff6aca24aaf2711c49a6a363, type: 3}
   m_Name: DefaultMovement1
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementStats
-  JumpHeight: 3.25
+  JumpHeight: 2.2
   Gravity: -26
   MaxFallSpeed: 21
   CoyoteTime: 0.15
   JumpBuffer: 0.15
+  rotationalWalkSpeed: 5
+  rotationalRotateDamp: 0.1
+  focusWalkSpeed: 5
+  forwardSpeedMultiplier: 1
+  backwardSpeedMultiplier: 0.85
+  strafeSpeedMultiplier: 0.75
+  focusRotateDamp: 12

@@ -8,6 +8,9 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Transform playerCamera;
     [SerializeField] private PlayerMovement playerMovement; //Direct reference to player movement might want to be turned into a call to the player manager (if im even gonna use that)
 
+    private Transform lockedOnEnemy;
+    private bool lockedOn;
+
     private CombatState currentState = CombatState.Idle;
 
     private Vector3 attackDirection; //Save what direction the attack started in.
@@ -134,7 +137,13 @@ public class PlayerCombat : MonoBehaviour
         currentState = CombatState.Idle;
         playerMovement.SetMovementLocked(false);
     }
-    
+
+    public void ReceiveLockInfo(Transform target, bool locked)
+    {
+        lockedOnEnemy = target;
+        lockedOn = locked;
+    }
+
     //CameraManager.Instance.PlayImpact(timeScale: 0.1f,duration: 0.2f,shakeStrength: 1f,shakeDuration: 0.4f);
     //This up here is just what to call if i want hitstop and screenshake. Most likely want to just make this a scriptable object to pass through but it's not necessary rn.
 }

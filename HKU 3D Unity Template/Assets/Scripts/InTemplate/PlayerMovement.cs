@@ -13,12 +13,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CharacterController playerCharacterController;
     [SerializeField] private Transform playerCamera;
 
-    [SerializeField] private float playerWalkSpeed = 5.0f; //These stats and more when the scripts gets bigger gotta be replaced by a data class holding it
-    [SerializeField] private float playerRotateDampening = 0.1f;
     [SerializeField] private float turnSmoothingVelocity;
 
     private Vector2 playerMoveAmount;
     private float time;
+
 
     //JumpingVariables
     private float verticalVelocity;
@@ -27,6 +26,10 @@ public class PlayerMovement : MonoBehaviour
     private float timeJumpWasPressed;
     private float frameLeftGrounded = float.MinValue;
     private bool coyoteUsable;
+
+    //FocusMode
+    private Transform lockedOnEnemy;
+    private bool lockedOn;
 
     //StateVariables... STATE? this? State? hit the rooooad dude, This is priiiivate variables
     private bool movementLocked; //Hmmmmm
@@ -84,18 +87,18 @@ public class PlayerMovement : MonoBehaviour
         switch (movementState)
         {
             case MovementState.Grounded:
-                PlayerMoveAndRotate();
+                HandlePlayerMovement();
                 break;
 
             case MovementState.InAir:
-                PlayerMoveAndRotate();
+                HandlePlayerMovement();
                 break;
 
             case MovementState.NoInput:
                 break;
         }
 
-        HandleGravity();
+        //HandleGravity();
     }
 
     private void CheckGrounded()
@@ -161,7 +164,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void PlayerMoveAndRotate()
+    private void HandlePlayerMovement()
+    {
+        if (!lockedOn)
+        {
+            RotationalPlayerMovement();
+            return;
+        }
+        else
+        {
+            FocusPlayerMovement();
+        }
+    }
+
+    private void RotationalPlayerMovement()//Previously called PlayerMoveAndRotate
     {
         if (movementLocked) //Only fall when movement is locked, mainly during combat animations
         {
@@ -171,22 +187,81 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        Vector3 playerDirection = new Vector3(playerMoveAmount.x,0f, playerMoveAmount.y).normalized;
+        Vector3 playerDirection = new Vector3(playerMoveAmount.x, 0f, playerMoveAmount.y).normalized;
         Vector3 verticalMove = new Vector3(0f, verticalVelocity, 0f) * Time.deltaTime;
 
         if (playerDirection.magnitude >= 0.1f)
         {
             float targetAngle = Mathf.Atan2(playerDirection.x, playerDirection.z) * Mathf.Rad2Deg + playerCamera.eulerAngles.y;
-            float smoothTargetAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothingVelocity, playerRotateDampening);
+            float smoothTargetAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothingVelocity, stats.rotationalRotateDamp);
 
             transform.rotation = Quaternion.Euler(0f, smoothTargetAngle, 0f);
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            playerCharacterController.Move(moveDirection.normalized * playerWalkSpeed * Time.deltaTime + verticalMove);
+            playerCharacterController.Move(moveDirection.normalized * stats.rotationalWalkSpeed * Time.deltaTime + verticalMove);
         }
         else
         {
             playerCharacterController.Move(verticalMove);
         }
+    }
+
+    private void FocusPlayerMovement()
+    {
+        RotateTowardsTarget();
+
+        if (movementLocked)
+        {
+            Vector3 onlyUseGravity = new Vector3(0f, verticalVelocity, 0f) * Time.deltaTime;
+
+            playerCharacterController.Move(onlyUseGravity);
+            return;
+        }
+
+        float horizontalInput = playerMoveAmount.x;
+        float verticalInput = playerMoveAmount.y;
+
+        Vector3 forward = transform.forward;
+        Vector3 right = transform.right;
+
+        Vector3 forwardMovement = forward * verticalInput;
+        Vector3 strafeMovement = right * horizontalInput;
+
+        float forwardSpeed = verticalInput >= 0f ? stats.forwardSpeedMultiplier : stats.backwardSpeedMultiplier; //Decide to use forward or backwardsmultiplier
+
+        Vector3 moveDirection = forwardMovement * forwardSpeed + strafeMovement * stats.strafeSpeedMultiplier;
+
+        if (moveDirection.sqrMagnitude > 1f)
+        {
+            moveDirection.Normalize();
+        }
+
+        Vector3 verticalMove = Vector3.up * verticalVelocity * Time.deltaTime;
+
+        playerCharacterController.Move(moveDirection * stats.focusWalkSpeed * Time.deltaTime + verticalMove);
+
+    }
+
+    private void RotateTowardsTarget()
+    {
+        if (!lockedOnEnemy)
+        {
+            Debug.Log("No Enemy Locked On");
+            return;
+        }
+
+        Debug.Log("Rotating towards target!");
+
+        Vector3 direction = lockedOnEnemy.position - transform.position;
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < 0.001f)
+        {
+            return;
+        }
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+        transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation, stats.focusRotateDamp * Time.deltaTime);
     }
 
     public void ChangeMovementState(MovementState newState) //Not sure if i'd want this public, makes sense that the playermanager could acces it but dont want state to just be toyed with by other scripts i think
@@ -220,5 +295,11 @@ public class PlayerMovement : MonoBehaviour
     public void SetMovementLocked(bool locked) //Shi i dont think i like having this restriction here but it works.
     {
         movementLocked = locked;
+    }
+
+    public void ReceiveLockInfo(Transform target, bool locked)
+    {
+        lockedOnEnemy = target;
+        lockedOn = locked;
     }
 }

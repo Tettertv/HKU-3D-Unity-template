@@ -4,22 +4,17 @@ using System.Collections.Generic;
 
 public class CombatTargetFinder : MonoBehaviour
 {
-    public static List<Transform> enemyTargetPool;
+    public static List<Transform> enemyTargetPool = new List<Transform>();
 
     private bool lockedOn;
     private Transform currentTarget;
     [SerializeField] private CinemachineCamera rotationalCamera;
     [SerializeField] private CinemachineCamera focusCamera;
+    [SerializeField] private PlayerMovement playerMovementController;
+    [SerializeField] private PlayerCombat playerCombatController;
 
     [SerializeField] private List<Transform> inspectorPool; //Just to see the pool in the editor
 
-    private void Start()
-    {
-        if ( enemyTargetPool == null)
-        {
-            enemyTargetPool = new List<Transform>();
-        }
-    }
     private void OnEnable()
     {
         if (InputManager.Instance == null)
@@ -69,7 +64,12 @@ public class CombatTargetFinder : MonoBehaviour
 
     public static void AddToTargetPool(Transform target)
     {
-        if (!enemyTargetPool.Contains(target) && enemyTargetPool != null)
+        if (enemyTargetPool == null)
+        {
+            enemyTargetPool = new List<Transform>();
+        }
+
+        if (target != null && !enemyTargetPool.Contains(target))
         {
             enemyTargetPool.Add(target);
         }
@@ -77,10 +77,12 @@ public class CombatTargetFinder : MonoBehaviour
 
     public static void RemoveFromTargetPool(Transform target)
     {
-        if (enemyTargetPool.Contains(target) && enemyTargetPool != null)
+        if (enemyTargetPool == null || target == null)
         {
-            enemyTargetPool.Remove(target);
+            return;
         }
+
+        enemyTargetPool.Remove(target);
     }
 
     public void RetryCombatLock()
@@ -97,6 +99,13 @@ public class CombatTargetFinder : MonoBehaviour
 
             rotationalCamera.gameObject.SetActive(false);
             lockedOn = true;
+
+            AssignLockInfo();
+        }
+        else
+        {
+            Debug.Log("Tried to Lock on but no target at the momentl");
+            //Debug, not really bad for code to get here though.
         }
     }
 
@@ -107,6 +116,14 @@ public class CombatTargetFinder : MonoBehaviour
 
         rotationalCamera.gameObject.SetActive(true);
         lockedOn = false;
+
+        AssignLockInfo();
+    }
+
+    private void AssignLockInfo()
+    {
+        playerMovementController.ReceiveLockInfo(currentTarget, lockedOn);
+        playerCombatController.ReceiveLockInfo(currentTarget, lockedOn);
     }
 
     private Transform GetCenterTarget() //gets the target closest to the center of the screen
