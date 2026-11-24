@@ -15,10 +15,10 @@ MonoBehaviour:
   Path: ../GameBalancingFMODStudioProject/Build/Desktop/PlayerBank.bank
   Name: PlayerBank
   StudioPath: bank:/PlayerBank
-  lastModified: 639304654510782785
+  lastModified: 639311531955403326
   FileSizes:
   - Name: Desktop
-    Value: 6208
+    Value: 6816
   Exists: 1
 --- !u!114 &-4728307590839121532
 MonoBehaviour:
@@ -35,10 +35,30 @@ MonoBehaviour:
   Path: ../GameBalancingFMODStudioProject/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639304651483005782
+  lastModified: 639311529111488942
   FileSizes:
   - Name: Desktop
-    Value: 1214
+    Value: 1312
+  Exists: 1
+--- !u!114 &-2219677984797866642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Enemy1Bank.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: ../GameBalancingFMODStudioProject/Build/Desktop/Enemy1Bank.bank
+  Name: Enemy1Bank
+  StudioPath: bank:/Enemy1Bank
+  lastModified: 639311529120081812
+  FileSizes:
+  - Name: Desktop
+    Value: 51328
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -57,18 +77,49 @@ MonoBehaviour:
   - {fileID: 5796678040462590588}
   - {fileID: -8762911691830188849}
   - {fileID: 3227309058105062744}
+  - {fileID: -2219677984797866642}
   EditorEvents:
   - {fileID: 1676667640134001428}
+  - {fileID: 289718166353277118}
   EditorParameters: []
   MasterBanks:
   - {fileID: 5796678040462590588}
   StringsBanks:
   - {fileID: -4728307590839121532}
   cacheVersion: 131861
-  cacheTime: 639304654510782785
+  cacheTime: 639311531955403326
   SerializableEventsDict:
   - key: event:/SwordWhipTest1
     index: 0
+  - key: event:/RapierHitTest1
+    index: 1
+--- !u!114 &289718166353277118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RapierHitTest1
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/RapierHitTest1
+  Guid:
+    Data1: -1016697298
+    Data2: 1247835118
+    Data3: 507914925
+    Data4: 2075336491
+  Banks:
+  - {fileID: -2219677984797866642}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 750
 --- !u!114 &1676667640134001428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,7 +182,7 @@ MonoBehaviour:
   Path: ../GameBalancingFMODStudioProject/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639304651482188129
+  lastModified: 639311529111270979
   FileSizes:
   - Name: Desktop
     Value: 2272

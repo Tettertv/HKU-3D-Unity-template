@@ -562,6 +562,7 @@ MonoBehaviour:
   MasterBanks:
   - Master
   Banks:
+  - Enemy1Bank
   - PlayerBank
   - UIBank
   BanksToLoad: []

@@ -97,10 +97,21 @@
 		<relationship name="effects">
 			<destination>{5e8cf019-cea8-4232-9e33-5513bba10a4a}</destination>
 			<destination>{3df125f2-ae1c-4f7a-883b-68759e196646}</destination>
+			<destination>{00002162-b98b-46d4-a850-dadb4f6bc05a}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{41256dfa-a1b3-458d-95a3-719b742cc7e3}" />
 	<object class="SingleSound" id="{4d69f412-e574-4610-a8f1-196fff2611be}">
+		<property name="volume">
+			<value>-3.5</value>
+		</property>
+		<property name="pitch">
+			<value>0.699999988</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{145d649f-90df-427d-b19f-7bbe01851d9b}</destination>
+			<destination>{43e22611-65b7-495e-a0a2-05fe256950a5}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{6f4d8e63-9f0a-47be-ad4b-4c0fa83b1642}</destination>
 		</relationship>
@@ -108,4 +119,31 @@
 	<object class="MixerBusFader" id="{8876fb59-8eff-4d28-acb6-d22c7722df4f}" />
 	<object class="MixerBusFader" id="{5e8cf019-cea8-4232-9e33-5513bba10a4a}" />
 	<object class="SpatialiserEffect" id="{3df125f2-ae1c-4f7a-883b-68759e196646}" />
+	<object class="ThreeEQEffect" id="{00002162-b98b-46d4-a850-dadb4f6bc05a}">
+		<property name="lowGain">
+			<value>-2.5</value>
+		</property>
+		<property name="midGain">
+			<value>-1</value>
+		</property>
+		<property name="highGain">
+			<value>1</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{145d649f-90df-427d-b19f-7bbe01851d9b}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="amount">
+			<value>4.5</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{43e22611-65b7-495e-a0a2-05fe256950a5}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>10</value>
+		</property>
+	</object>
 </objects>

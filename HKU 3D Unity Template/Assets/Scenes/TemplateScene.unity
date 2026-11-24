@@ -169,7 +169,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 622869}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -299,6 +299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bcdfb5868b173a41a007e7cac8cf98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  hitAudio1: {fileID: 11400000, guid: 386ad65383be98b4d86c1debac4ffd16, type: 2}
+  hitVFX1: {fileID: 0}
 --- !u!114 &46045551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,6 +666,7 @@ GameObject:
   - component: {fileID: 210934385}
   - component: {fileID: 210934384}
   - component: {fileID: 210934383}
+  - component: {fileID: 210934388}
   m_Layer: 0
   m_Name: Capsule (2)
   m_TagString: Enemy
@@ -698,6 +701,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bcdfb5868b173a41a007e7cac8cf98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HittableComponent
+  hitAudio1: {fileID: 11400000, guid: 386ad65383be98b4d86c1debac4ffd16, type: 2}
+  hitVFX1: {fileID: 2897139655749225598, guid: 302c102f3bd84cd4bb6099536c10c4aa, type: 3}
 --- !u!114 &210934384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,6 +795,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 210934381}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &210934388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210934381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df99417450545545980c51669b1981e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WobbleTest
+  wobbleAngle: 15
+  wobbleSpeed: 15
+  wobbleDuration: 0.4
 --- !u!1 &325006977
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,8 +921,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.102878354, y: -0.0000000074110496, z: 7.6650364e-10, w: 0.994694}
-  m_LocalPosition: {x: 0, y: 6.44, z: -5.5}
+  m_LocalRotation: {x: 0.16501883, y: 3.964534e-16, z: -6.633165e-17, w: 0.98629045}
+  m_LocalPosition: {x: 0, y: 7.39, z: -6.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1870,8 +1890,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 857044062}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10287834, y: -0.0000000074110487, z: 7.6650347e-10, w: 0.994694}
-  m_LocalPosition: {x: 0, y: 6.44, z: -5.5}
+  m_LocalRotation: {x: 0.1650188, y: 4.398221e-16, z: -3.2553962e-16, w: 0.98629045}
+  m_LocalPosition: {x: 0, y: 7.39, z: -6.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1998,14 +2018,14 @@ MonoBehaviour:
   Radius: 5
   Orbits:
     Top:
-      Radius: 4.1
-      Height: 3.3
-    Center:
-      Radius: 5.5
-      Height: 2.15
-    Bottom:
       Radius: 4.3
-      Height: 1.4
+      Height: 4.8
+    Center:
+      Radius: 6.1
+      Height: 3.1
+    Bottom:
+      Radius: 5.8
+      Height: 1.8
     SplineCurvature: 0.547
   RecenteringTarget: 2
   HorizontalAxis:
@@ -2231,6 +2251,8 @@ GameObject:
   - component: {fileID: 1018113481}
   - component: {fileID: 1018113485}
   - component: {fileID: 1018113486}
+  - component: {fileID: 1018113487}
+  - component: {fileID: 1018113488}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Enemy
@@ -2357,6 +2379,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bcdfb5868b173a41a007e7cac8cf98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HittableComponent
+  hitAudio1: {fileID: 11400000, guid: 386ad65383be98b4d86c1debac4ffd16, type: 2}
+  hitVFX1: {fileID: 2897139655749225598, guid: 302c102f3bd84cd4bb6099536c10c4aa, type: 3}
+--- !u!54 &1018113487
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018113480}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &1018113488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018113480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df99417450545545980c51669b1981e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WobbleTest
+  wobbleAngle: 30
+  wobbleSpeed: 30
+  wobbleDuration: 0.6
 --- !u!1 &1072865252
 GameObject:
   m_ObjectHideFlags: 0
@@ -2673,6 +2739,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bcdfb5868b173a41a007e7cac8cf98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HittableComponent
+  hitAudio1: {fileID: 11400000, guid: 386ad65383be98b4d86c1debac4ffd16, type: 2}
+  hitVFX1: {fileID: 0}
 --- !u!114 &1267536108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2857,6 +2925,7 @@ GameObject:
   - component: {fileID: 1521765269}
   - component: {fileID: 1521765268}
   - component: {fileID: 1521765267}
+  - component: {fileID: 1521765272}
   m_Layer: 0
   m_Name: Capsule (3)
   m_TagString: Enemy
@@ -2891,6 +2960,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bcdfb5868b173a41a007e7cac8cf98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HittableComponent
+  hitAudio1: {fileID: 11400000, guid: 386ad65383be98b4d86c1debac4ffd16, type: 2}
+  hitVFX1: {fileID: 0}
 --- !u!114 &1521765268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2983,6 +3054,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1521765265}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1521765272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521765265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df99417450545545980c51669b1981e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  wobbleAngle: 15
+  wobbleSpeed: 15
+  wobbleDuration: 0.4
 --- !u!1 &1522177926
 GameObject:
   m_ObjectHideFlags: 0
@@ -3027,7 +3113,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3202cf4c69f7b64e8b5544048d67fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  banksToLoad: []
+  banksToLoad:
+  - Enemy1Bank
 --- !u!1 &1562491357
 GameObject:
   m_ObjectHideFlags: 0
@@ -3046,13 +3133,14 @@ GameObject:
   - component: {fileID: 1562491366}
   - component: {fileID: 1562491367}
   - component: {fileID: 1562491368}
+  - component: {fileID: 1562491369}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1562491359
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3224,6 +3312,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bcdfb5868b173a41a007e7cac8cf98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  hitAudio1: {fileID: 11400000, guid: 386ad65383be98b4d86c1debac4ffd16, type: 2}
+  hitVFX1: {fileID: 2897139655749225598, guid: 302c102f3bd84cd4bb6099536c10c4aa, type: 3}
 --- !u!114 &1562491367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3248,6 +3338,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b2926463c1a4244a8f350e0032b152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!114 &1562491369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562491357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7df99417450545545980c51669b1981e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WobbleTest
+  wobbleAngle: 20
+  wobbleSpeed: 20
+  wobbleDuration: 0.6
 --- !u!1 &1659671798
 GameObject:
   m_ObjectHideFlags: 0
@@ -3705,6 +3810,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bcdfb5868b173a41a007e7cac8cf98c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  hitAudio1: {fileID: 11400000, guid: 386ad65383be98b4d86c1debac4ffd16, type: 2}
+  hitVFX1: {fileID: 0}
 --- !u!114 &2029540451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3785,7 +3892,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2
@@ -3978,7 +4085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886251e9a18ece04ea8e61686c173e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachinePositionComposer
-  CameraDistance: 6
+  CameraDistance: 5.6
   DeadZoneDepth: 0
   Composition:
     ScreenPosition: {x: 0, y: 0}
@@ -3990,7 +4097,7 @@ MonoBehaviour:
       Size: {x: 0.8, y: 0.8}
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
-  TargetOffset: {x: -2, y: 1.9, z: 0}
+  TargetOffset: {x: 1.5, y: 1.6, z: 0}
   Damping: {x: 1, y: 1, z: 1}
   Lookahead:
     Enabled: 0

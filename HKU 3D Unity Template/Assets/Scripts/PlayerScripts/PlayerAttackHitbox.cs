@@ -12,7 +12,7 @@ public class PlayerAttackHitbox : MonoBehaviour
 
                 target.GetHit(data);
 
-                //Really shouldn't have this here but whatever
+                //Really shouldn't have this here but whatever (I have HittableComponent Now, move over to there at some point with some kind of HitDataSO
                 CameraManager.Instance.PlayImpact(0.1f, 0.15f, 0.8f, 0.1f);
                 break;
         }

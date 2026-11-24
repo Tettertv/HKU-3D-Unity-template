@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{ff0dba51-e0b2-46c5-b81d-61eb3e90ac6c}">
+		<property name="assetPath">
+			<value>RapierHitTest1.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.2455102040816326</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2eaea6d2-b72b-4c1d-9613-f3a857e8588c}</destination>
+		</relationship>
+	</object>
+</objects>

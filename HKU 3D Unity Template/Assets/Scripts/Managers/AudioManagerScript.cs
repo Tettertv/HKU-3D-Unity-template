@@ -50,7 +50,7 @@ public class AudioManagerScript : MonoBehaviour
     }
 
     //Loops
-    public EventInstance CreateInstance(AudioEventSO audioEvent)
+    public EventInstance CreateInstance(AudioEventSO audioEvent) //Needs more implenetation i think like the safeguards in oneshot
     {
         return RuntimeManager.CreateInstance(audioEvent.eventReference);
     }
@@ -75,6 +75,7 @@ public class AudioManagerScript : MonoBehaviour
     public void ResumeGameAudio()
     {
         sfxBus.setPaused(false);
+        ambienceBus.setPaused(false);
         musicBus.setPaused(false);
     }
 
