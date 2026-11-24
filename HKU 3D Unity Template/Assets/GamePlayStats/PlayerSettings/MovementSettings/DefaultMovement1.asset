@@ -24,3 +24,6 @@ MonoBehaviour:
   backwardSpeedMultiplier: 0.85
   strafeSpeedMultiplier: 0.75
   focusRotateDamp: 12
+  dashDistance: 3
+  dashDuration: 0.1
+  dashCooldown: 0.5

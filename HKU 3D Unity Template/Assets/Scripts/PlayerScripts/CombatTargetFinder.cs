@@ -85,15 +85,16 @@ public class CombatTargetFinder : MonoBehaviour
         enemyTargetPool.Remove(target);
     }
 
-    public void RetryCombatLock()
+    public void RetryCombatLock() //not sure what i wanted here yo
     {
 
     }
 
-    private void LockOn()
+    private void LockOn() //The logic in here and in LockOFf() would probably better be if moved to a different camera script instead of being on the player like this with hard references huh?
     {
         if (currentTarget)
         {
+
             focusCamera.LookAt = currentTarget;
             focusCamera.gameObject.SetActive(true);
 
@@ -111,6 +112,13 @@ public class CombatTargetFinder : MonoBehaviour
 
     private void LockOff()
     {
+        if (!lockedOn)
+        {
+            return;
+        }
+
+        AllignRotationalCamera();
+
         focusCamera.LookAt = null;
         focusCamera.gameObject.SetActive(false);
 
@@ -118,6 +126,18 @@ public class CombatTargetFinder : MonoBehaviour
         lockedOn = false;
 
         AssignLockInfo();
+    }
+
+    private void AllignRotationalCamera() //Also Different script Duh()
+    {
+        Vector3 cameraForward = Camera.main.transform.forward;
+
+        float horizontal = Mathf.Atan2(cameraForward.x,cameraForward.z) * Mathf.Rad2Deg;
+
+        float vertical = Mathf.Asin(cameraForward.y) * Mathf.Rad2Deg;
+
+        rotationalCamera.GetComponent<CinemachineOrbitalFollow>().HorizontalAxis.Value = horizontal;
+        rotationalCamera.GetComponent<CinemachineOrbitalFollow>().VerticalAxis.Value = vertical;
     }
 
     private void AssignLockInfo()

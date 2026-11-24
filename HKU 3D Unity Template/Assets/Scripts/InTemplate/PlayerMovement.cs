@@ -31,6 +31,12 @@ public class PlayerMovement : MonoBehaviour
     private Transform lockedOnEnemy;
     private bool lockedOn;
 
+    //Focus Dashvariables
+    private float dashTimer;
+    private float lastDashTime;
+    private Vector3 dashDirection;
+    private float dashDistanceTravelled;
+
     //StateVariables... STATE? this? State? hit the rooooad dude, This is priiiivate variables
     private bool movementLocked; //Hmmmmm
 
@@ -39,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Grounded,
         InAir,
+        Dashing,
         NoInput
     }
 
@@ -71,6 +78,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void JumpInput()
     {
+        if (lockedOn)
+        {
+            TryStartDash();
+            return;
+        }
+
         canCoyote = true;
         timeJumpWasPressed = time;
     }
@@ -89,11 +102,12 @@ public class PlayerMovement : MonoBehaviour
             case MovementState.Grounded:
                 HandlePlayerMovement();
                 break;
-
             case MovementState.InAir:
                 HandlePlayerMovement();
                 break;
-
+            case MovementState.Dashing:
+                HandleDashMovement();
+                break;
             case MovementState.NoInput:
                 break;
         }
@@ -262,6 +276,79 @@ public class PlayerMovement : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(direction);
 
         transform.rotation = Quaternion.Slerp(transform.rotation,targetRotation, stats.focusRotateDamp * Time.deltaTime);
+    }
+
+    private Vector3 GetFocusDashDirection()
+    {
+        float horizontal = playerMoveAmount.x;
+        float vertical = playerMoveAmount.y;
+
+        if (Mathf.Abs(horizontal) < 0.1f && Mathf.Abs(vertical) < 0.1f)
+        {
+            return transform.forward;
+        }
+
+        if (Mathf.Abs(vertical) >= Mathf.Abs(horizontal))
+        {
+            return vertical > 0f ? transform.forward : -transform.forward;
+        }
+
+        return horizontal > 0f ? transform.right : -transform.right;
+    }
+    private void TryStartDash()
+    {
+        if (movementLocked)
+        {
+            return;
+        }
+
+        if (time < lastDashTime + stats.dashCooldown)
+        {
+            return;
+        }
+
+        if (movementState == MovementState.Dashing)
+        {
+            Debug.Log("Somehow still in Dashing State");
+            return;
+        }
+
+        dashDirection = GetFocusDashDirection();
+
+        dashTimer = 0f;
+        dashDistanceTravelled = 0f;
+
+        lastDashTime = time;
+
+        ChangeMovementState(MovementState.Dashing);
+
+        verticalVelocity = 0f;
+    }
+
+    private void HandleDashMovement()
+    {
+        RotateTowardsTarget();
+
+        dashTimer += Time.deltaTime;
+
+        float dashProgress = Mathf.Clamp01(dashTimer / stats.dashDuration);
+
+        float targetDistance = stats.dashDistance * dashProgress;
+
+        float distanceThisFrame = targetDistance - dashDistanceTravelled;
+
+        dashDistanceTravelled = targetDistance;
+
+        Vector3 horizontalMovement = dashDirection * distanceThisFrame;
+
+        Vector3 verticalMovement = Vector3.up * verticalVelocity * Time.deltaTime;
+
+        playerCharacterController.Move(horizontalMovement + verticalMovement);
+
+        if (dashTimer >= stats.dashDuration)
+        {
+            ChangeMovementState(playerCharacterController.isGrounded ? MovementState.Grounded : MovementState.InAir);
+        }
     }
 
     public void ChangeMovementState(MovementState newState) //Not sure if i'd want this public, makes sense that the playermanager could acces it but dont want state to just be toyed with by other scripts i think

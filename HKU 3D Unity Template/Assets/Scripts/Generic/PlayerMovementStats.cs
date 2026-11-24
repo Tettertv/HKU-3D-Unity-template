@@ -20,4 +20,9 @@ public class PlayerMovementStats : ScriptableObject
     public float backwardSpeedMultiplier = 0.85f;
     public float strafeSpeedMultiplier = 0.75f;
     public float focusRotateDamp = 12f;
+
+    [Header("Focus Dash")]
+    public float dashDistance = 2.5f;
+    public float dashDuration = 0.25f;
+    public float dashCooldown = 1f;
 }
