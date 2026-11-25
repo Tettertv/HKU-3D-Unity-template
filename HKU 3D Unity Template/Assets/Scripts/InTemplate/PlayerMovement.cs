@@ -263,8 +263,6 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        Debug.Log("Rotating towards target!");
-
         Vector3 direction = lockedOnEnemy.position - transform.position;
         direction.y = 0f;
 

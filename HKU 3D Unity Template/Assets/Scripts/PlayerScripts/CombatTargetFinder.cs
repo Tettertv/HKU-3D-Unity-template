@@ -15,6 +15,8 @@ public class CombatTargetFinder : MonoBehaviour
 
     [SerializeField] private List<Transform> inspectorPool; //Just to see the pool in the editor
 
+    //TO DO:
+    //Add a way to lock off based on distance to the enemy, or if the target gets destroyed
     private void OnEnable()
     {
         if (InputManager.Instance == null)
@@ -87,7 +89,7 @@ public class CombatTargetFinder : MonoBehaviour
 
     public void RetryCombatLock() //not sure what i wanted here yo
     {
-
+        TryCombatLock();
     }
 
     private void LockOn() //The logic in here and in LockOFf() would probably better be if moved to a different camera script instead of being on the player like this with hard references huh?

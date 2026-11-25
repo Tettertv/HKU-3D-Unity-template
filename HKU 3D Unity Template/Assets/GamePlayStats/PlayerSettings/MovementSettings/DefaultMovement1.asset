@@ -19,7 +19,7 @@ MonoBehaviour:
   JumpBuffer: 0.15
   rotationalWalkSpeed: 5
   rotationalRotateDamp: 0.1
-  focusWalkSpeed: 5
+  focusWalkSpeed: 7
   forwardSpeedMultiplier: 1
   backwardSpeedMultiplier: 0.85
   strafeSpeedMultiplier: 0.75

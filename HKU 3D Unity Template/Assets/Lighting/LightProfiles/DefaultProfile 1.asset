@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a749b9e8f966c5f4eafe9672abdc9e3d, type: 3}
   m_Name: DefaultProfile 1
   m_EditorClassIdentifier: Assembly-CSharp::LightingProfile
-  globalLightColor: {r: 1, g: 1, b: 1, a: 1}
-  globalLightIntensity: 1
+  globalLightColor: {r: 1, g: 0.8637318, b: 0.72264147, a: 1}
+  globalLightIntensity: 1.08
   accentLightIntensityMultiplier: 1
   volumeProfile: {fileID: 0}
   transitionDuration: 0.5

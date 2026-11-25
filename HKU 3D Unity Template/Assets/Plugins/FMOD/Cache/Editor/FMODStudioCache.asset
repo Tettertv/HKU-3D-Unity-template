@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: ../GameBalancingFMODStudioProject/Build/Desktop/PlayerBank.bank
   Name: PlayerBank
   StudioPath: bank:/PlayerBank
-  lastModified: 639311531955403326
+  lastModified: 639311962493326951
   FileSizes:
   - Name: Desktop
     Value: 6816
@@ -35,7 +35,7 @@ MonoBehaviour:
   Path: ../GameBalancingFMODStudioProject/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639311529111488942
+  lastModified: 639311962493326951
   FileSizes:
   - Name: Desktop
     Value: 1312
@@ -55,7 +55,7 @@ MonoBehaviour:
   Path: ../GameBalancingFMODStudioProject/Build/Desktop/Enemy1Bank.bank
   Name: Enemy1Bank
   StudioPath: bank:/Enemy1Bank
-  lastModified: 639311529120081812
+  lastModified: 639311962493326951
   FileSizes:
   - Name: Desktop
     Value: 51328
@@ -87,7 +87,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -4728307590839121532}
   cacheVersion: 131861
-  cacheTime: 639311531955403326
+  cacheTime: 639311962493326951
   SerializableEventsDict:
   - key: event:/SwordWhipTest1
     index: 0
@@ -162,7 +162,7 @@ MonoBehaviour:
   Path: ../GameBalancingFMODStudioProject/Build/Desktop/UIBank.bank
   Name: UIBank
   StudioPath: bank:/UIBank
-  lastModified: 639304651497292974
+  lastModified: 639300926159562634
   FileSizes:
   - Name: Desktop
     Value: 506
@@ -182,7 +182,7 @@ MonoBehaviour:
   Path: ../GameBalancingFMODStudioProject/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639311529111270979
+  lastModified: 639311962493326951
   FileSizes:
   - Name: Desktop
     Value: 2272

@@ -7,8 +7,8 @@ public class LightManager : MonoBehaviour
     public static LightManager Instance { get; private set; }
 
     [Header("References")]
-    [SerializeField] private Light2D globalLight;
-    [SerializeField] private Light2D playerAccentLight;
+    [SerializeField] private Light globalLight;
+    [SerializeField] private Light playerAccentLight;
     [SerializeField] private Volume globalVolume;
 
     [Header("DefaulLight")]
